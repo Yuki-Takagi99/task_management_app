@@ -1,24 +1,19 @@
-# README
+# このアプリについて
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+このアプリはタスクを管理するアプリです。
 
-Things you may want to cover:
+## バージョン
+  - Ruby 2.6.5
+  - Rails 5.2.4.2
+  - PostgreSQL 12.1
 
-* Ruby version
+## データベース
+### tasksテーブル
+#### モデル名:Task
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+カラム名    | データ型 | limit  | null  | default
+------------|----------|--------|-------|--------
+title       | string   | 30文字 | false | なし
+description | text     | なし   | false | なし
+created_at  | datetime | なし   | false | なし
+updated_at  | datetime | なし   | false | なし
