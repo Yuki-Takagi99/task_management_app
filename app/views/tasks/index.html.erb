@@ -1,12 +1,12 @@
-<h1>タスク一覧</h1>
+<h1><%= t('.task_list') %></h1>
 
-<%= link_to '新規登録', new_task_path, class: 'btn btn-primary' %>
+<%= link_to t('directory.task_creation'), new_task_path, class: 'btn btn-primary' %>
 
 <table border>
   <thead>
     <tr>
-      <th>タスク名</th>
-      <th>登録日時</th>
+      <th><%= t('activerecord.attributes.task.title') %></th>
+      <th><%= t('activerecord.attributes.task.created_at') %></th>
       <th></th>
       <th></th>
     </tr>
@@ -16,8 +16,8 @@
     <tr>
       <td><%= link_to task.title, task_path(task) %></td>
       <td><%= task.created_at %></td>
-      <td><%= link_to '編集', edit_task_path(task), class: 'btn btn-primary mr-3' %></td>
-      <td><%= link_to '削除', task, method: :delete, data: { confirm: "タスク「#{task.title}」を削除します。よろしいですか？" }, class: 'btn btn-danger' %></td>
+      <td><%= link_to t('directory.edit'), edit_task_path(task), class: 'btn btn-primary mr-3' %></td>
+      <td><%= link_to t('directory.delete'), task, method: :delete, data: { confirm: "タスク「#{task.title}」を削除します。よろしいですか？" }, class: 'btn btn-danger' %></td>
     </tr>
     <% end %>
   </tbody>

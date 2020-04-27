@@ -24,7 +24,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         # 「タスク名」というラベル名の入力欄と、「タスク詳細」というラベル名の入力欄に
         # タスクのタイトルと内容をそれぞれfill_in（入力）する
         # 2.ここに「タスク名」というラベル名の入力欄に内容をfill_in（入力）する処理を書く
-        fill_in 'タスク名', with: 'test_title'
+        fill_in 'タイトル', with: 'test_title'
         # 3.ここに「タスク詳細」というラベル名の入力欄に内容をfill_in（入力）する処理を書く
         fill_in '詳細', with: 'test_description'
         # 「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）
