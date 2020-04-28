@@ -17,6 +17,10 @@
       <td><%= simple_format(h(@task.description), {}, sanitize: false, wrapper_tag: "div") %></td>
     </tr>
     <tr>
+      <th><%= t('activerecord.attributes.task.end_deadline') %></th>
+      <td><%= @task.end_deadline.strftime('%Y/%m/%d') %></td>
+    </tr>
+    <tr>
       <th><%= t('activerecord.attributes.task.created_at') %></th>
       <td><%= @task.created_at %></td>
     </tr>
