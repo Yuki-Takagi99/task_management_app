@@ -1,6 +1,7 @@
 <h1><%= t('.task_list') %></h1>
 
 <%= link_to t('directory.task_creation'), new_task_path, class: 'btn btn-primary' %>
+<%= link_to t('.sort_by_end_deadline'), tasks_path(sort_expired: "true") %>
 
 <table border>
   <thead>

@@ -1,6 +1,10 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all.order(created_at: :desc) #作成日時順に表示
+    if params[:sort_expired]
+      @tasks = Task.all.order(end_deadline: :desc) #終了期限の降順に表示
+    else
+      @tasks = Task.all.order(created_at: :desc) #作成日時の降順に表示
+    end
   end
 
   def show
