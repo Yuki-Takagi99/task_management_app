@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all
+    @tasks = Task.all.order(created_at: :desc) #作成日時順に表示
   end
 
   def show
