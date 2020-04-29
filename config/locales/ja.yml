@@ -4,7 +4,7 @@ ja:
   tasks:
     index:
       task_list: タスク一覧
-      sort_by_end_deadline: 終了期限でソートする 
+      sort_by_end_deadline: 終了期限でソートする
     new:
     show:
       task_details: タスク詳細
