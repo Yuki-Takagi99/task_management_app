@@ -23,5 +23,9 @@
     <%= f.label :end_deadline %>
     <%= f.date_field :end_deadline, class: 'form-control' %>
   </div>
+  <div class="form-group">
+    <%= f.label :status %>
+    <%= f.select :status, ["未着手", "着手中", "完了"], class: 'form-control' %>
+  </div>
   <%= f.submit t('helpers.submit.create'), class: 'btn btn-primary' %>
 <% end %>

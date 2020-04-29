@@ -8,5 +8,6 @@ ja:
         title: タイトル
         description: 詳細
         end_deadline: 終了期限
+        status: 状態
         created_at: 登録日時
         updated_at: 更新日時
