@@ -3,6 +3,16 @@
 <%= link_to t('directory.task_creation'), new_task_path, class: 'btn btn-primary' %>
 <%= link_to t('.sort_by_end_deadline'), tasks_path(sort_expired: "true") %>
 
+<% #検索フォーム %>
+<%= form_with url:'/tasks', method: :get, local: true do |f| %>
+  <%= f.label :title, 'Search Title' %>
+  <%= f.text_field :title %>
+  <%= f.label :status, 'Search Status' %>
+  <%= f.select :status, ["未着手", "着手中", "完了"], { include_blank: true, selected: '' }, class: 'form-control' %>
+  <%= f.hidden_field :search, value: 'true' %>
+  <%= f.submit 'Search' %><%= link_to 'Clear', tasks_path %>
+<% end %>
+
 <table border>
   <thead>
     <tr>

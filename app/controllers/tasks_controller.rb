@@ -1,6 +1,14 @@
 class TasksController < ApplicationController
   def index
-    if params[:sort_expired]
+    if params[:search].present?
+      if params[:title].present? && params[:status].present? #タイトルとステータス両方で検索する場合 #タイトルはあいまい検索
+        @tasks = Task.where("title LIKE ?", "%#{params[:title]}%").where(status: params[:status])
+      elsif params[:title].present? #タイトルのみで検索する場合
+        @tasks = Task.where("title LIKE ?", "%#{params[:title]}%")
+      else params[:status].present? #ステータスのみで検索する場合
+        @tasks = Task.where(status: params[:status])
+      end
+    elsif params[:sort_expired]
       @tasks = Task.all.order(end_deadline: :asc) #終了期限の昇順に表示
     else
       @tasks = Task.all.order(created_at: :desc) #作成日時の降順に表示
