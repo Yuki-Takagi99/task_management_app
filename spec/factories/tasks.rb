@@ -3,6 +3,7 @@ FactoryBot.define do
     title { 'test_title_01' }
     description { 'test_description_01' }
     end_deadline { '2020-06-01' }
+    status { '着手中' }
   end
   factory :second_task, class: Task do
     title { 'test_title_02' }

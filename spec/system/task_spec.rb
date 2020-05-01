@@ -20,12 +20,35 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
     end
     context '終了期限でソートするボタンを押した場合' do
-      it 'タスクが終了期限順の昇順に並んでいる' do
+      it 'タスクが終了期限の昇順に並んでいる' do
         visit tasks_path
         click_on '終了期限でソートする'
+        sleep 0.5
         task_list = all('.deadline_row')
         expect(task_list[0]).to have_content '2020-06-01'
         expect(task_list[1]).to have_content '2020-06-02'
+      end
+    end
+    context '検索をした場合' do
+      it "タイトルで検索できる" do
+        visit tasks_path
+        fill_in 'Search Title', with: 'test_title_01'
+        click_on 'Search'
+        expect(page).to have_content 'test_title_01'
+      end
+      it "ステータスで検索できる" do
+        visit tasks_path
+        select '着手中', from: 'Search Status'
+        click_on 'Search'
+        expect(page).to have_content '着手中'
+      end
+      it 'タイトルとステータスの両方で検索できる' do
+        visit tasks_path
+        fill_in 'Search Title', with: 'test_title_01'
+        select '着手中', from: 'Search Status'
+        click_on 'Search'
+        expect(page).to have_content 'test_title_01'
+        expect(page).to have_content '着手中'
       end
     end
   end
