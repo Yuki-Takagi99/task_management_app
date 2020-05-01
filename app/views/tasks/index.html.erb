@@ -1,7 +1,12 @@
 <h1><%= t('.task_list') %></h1>
 
 <%= link_to t('directory.task_creation'), new_task_path, class: 'btn btn-primary' %>
+
+<% #終了期限でソート %>
 <%= link_to t('.sort_by_end_deadline'), tasks_path(sort_expired: "true") %>
+
+<% #優先順位でソート %>
+<%= link_to t('.sort_by_priority'), tasks_path(sort_priority: "true") %>
 
 <% #検索フォーム %>
 <%= form_with url:'/tasks', method: :get, local: true do |f| %>

@@ -10,6 +10,8 @@ class TasksController < ApplicationController
       end
     elsif params[:sort_expired]
       @tasks = Task.all.order(end_deadline: :asc) #終了期限の昇順に表示
+    elsif params[:sort_priority]
+      @tasks = Task.all.order(priority: :asc).order(end_deadline: :asc) #優先順位が高いものを終了期限の昇順に表示
     else
       @tasks = Task.all.order(created_at: :desc) #作成日時の降順に表示
     end
