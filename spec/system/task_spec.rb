@@ -3,6 +3,7 @@ RSpec.describe 'タスク管理機能', type: :system do
   before do
     FactoryBot.create(:task)
     FactoryBot.create(:second_task)
+    FactoryBot.create(:third_task)
   end
   describe 'タスク一覧画面' do
     context 'タスクを作成した場合' do
@@ -14,9 +15,11 @@ RSpec.describe 'タスク管理機能', type: :system do
     context '複数のタスクを作成した場合' do
       it 'タスクが作成日時の降順に並んでいる' do
         visit tasks_path
+        sleep 0.5
         task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
-        expect(task_list[0]).to have_content 'test_title_02'
-        expect(task_list[1]).to have_content 'test_title_01'
+        expect(task_list[0]).to have_content 'test_title_03'
+        expect(task_list[1]).to have_content 'test_title_02'
+        expect(task_list[2]).to have_content 'test_title_01'
       end
     end
     context '終了期限でソートするボタンを押した場合' do
@@ -27,6 +30,17 @@ RSpec.describe 'タスク管理機能', type: :system do
         task_list = all('.deadline_row')
         expect(task_list[0]).to have_content '2020-06-01'
         expect(task_list[1]).to have_content '2020-06-02'
+      end
+    end
+    context '優先順位でソートするボタンを押した場合' do
+      it '優先順位が高・中・低の順で並んでいる' do
+        visit tasks_path
+        click_on '優先順位でソートする'
+        sleep 0.5
+        task_list = all('.priority_row')
+        expect(task_list[0]).to have_content '高'
+        expect(task_list[1]).to have_content '中'
+        expect(task_list[2]).to have_content '低'
       end
     end
     context '検索をした場合' do
