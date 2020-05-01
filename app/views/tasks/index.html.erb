@@ -18,6 +18,9 @@
   <%= f.submit 'Search' %><%= link_to 'Clear', tasks_path %>
 <% end %>
 
+<%= paginate @tasks %>
+<%= page_entries_info @tasks %>
+
 <table border>
   <thead>
     <tr>
@@ -42,5 +45,6 @@
       <td><%= link_to t('directory.delete'), task, method: :delete, data: { confirm: "タスク「#{task.title}」を削除します。よろしいですか？" }, class: 'btn btn-danger' %></td>
     </tr>
     <% end %>
+
   </tbody>
 </table>

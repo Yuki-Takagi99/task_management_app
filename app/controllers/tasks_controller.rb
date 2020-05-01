@@ -2,18 +2,18 @@ class TasksController < ApplicationController
   def index
     if params[:search].present?
       if params[:title].present? && params[:status].present? #タイトルとステータス両方で検索する場合 #タイトルはあいまい検索
-        @tasks = Task.search_title(params[:title]).search_status(params[:status])
+        @tasks = Task.page(params[:page]).search_title(params[:title]).search_status(params[:status])
       elsif params[:title].present? #タイトルのみで検索する場合
-        @tasks = Task.search_title(params[:title])
+        @tasks = Task.page(params[:page]).search_title(params[:title])
       else params[:status].present? #ステータスのみで検索する場合
-        @tasks = Task.search_status(params[:status])
+        @tasks = Task.page(params[:page]).search_status(params[:status])
       end
     elsif params[:sort_expired]
-      @tasks = Task.all.order(end_deadline: :asc) #終了期限の昇順に表示
+      @tasks = Task.page(params[:page]).order(end_deadline: :asc) #終了期限の昇順に表示
     elsif params[:sort_priority]
-      @tasks = Task.all.order(priority: :asc).order(end_deadline: :asc) #優先順位が高いものを終了期限の昇順に表示
+      @tasks = Task.page(params[:page]).order(priority: :asc).order(end_deadline: :asc) #優先順位が高いものを終了期限の昇順に表示
     else
-      @tasks = Task.all.order(created_at: :desc) #作成日時の降順に表示
+      @tasks = Task.page(params[:page]).order(created_at: :desc) #作成日時の降順に表示
     end
   end
 
