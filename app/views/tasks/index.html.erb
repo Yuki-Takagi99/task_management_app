@@ -1,27 +1,27 @@
-<h1><%= t('.task_list') %></h1>
+<h2><%= t('.task_list') %></h2>
 
-<%= link_to t('directory.task_creation'), new_task_path, class: 'btn btn-primary' %>
+  <%= link_to t('directory.task_creation'), new_task_path, class: 'btn btn-info' %></li>
+  <%= link_to t('.sort_by_end_deadline'), tasks_path(sort_expired: "true"), class: 'btn btn-info' %></li>
+  <%= link_to t('.sort_by_priority'), tasks_path(sort_priority: "true"), class: 'btn btn-info' %></li>
 
-<% #終了期限でソート %>
-<%= link_to t('.sort_by_end_deadline'), tasks_path(sort_expired: "true") %>
-
-<% #優先順位でソート %>
-<%= link_to t('.sort_by_priority'), tasks_path(sort_priority: "true") %>
-
-<% #検索フォーム %>
-<%= form_with url:'/tasks', method: :get, local: true do |f| %>
-  <%= f.label :title, 'Search Title' %>
-  <%= f.text_field :title %>
-  <%= f.label :status, 'Search Status' %>
-  <%= f.select :status, ["未着手", "着手中", "完了"], { include_blank: true, selected: '' }, class: 'form-control' %>
+<h3><%= t('.search_tasks') %></h3>
+<%= form_with class:"form-inline", url:'/tasks', method: :get, local: true do |f| %>
+  <div class="form-group">
+    <%= f.label :title, t('activerecord.attributes.task.title') %>
+    <%= f.text_field :title, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :status, t('activerecord.attributes.task.status') %>
+    <%= f.select :status, ["未着手", "着手中", "完了"], { include_blank: true, selected: '' }, class: 'form-control' %>
+  </div>
   <%= f.hidden_field :search, value: 'true' %>
-  <%= f.submit 'Search' %><%= link_to 'Clear', tasks_path %>
+  <%= f.submit t('.search'), class: 'btn btn-primary'%><%= link_to t('.clear'), tasks_path, class: 'btn btn-danger' %>
 <% end %>
 
 <%= paginate @tasks %>
 <%= page_entries_info @tasks %>
 
-<table border>
+<table class="table table-striped">
   <thead>
     <tr>
       <th><%= t('activerecord.attributes.task.title') %></th>
@@ -45,6 +45,5 @@
       <td><%= link_to t('directory.delete'), task, method: :delete, data: { confirm: "タスク「#{task.title}」を削除します。よろしいですか？" }, class: 'btn btn-danger' %></td>
     </tr>
     <% end %>
-
   </tbody>
 </table>

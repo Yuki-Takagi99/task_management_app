@@ -46,21 +46,21 @@ RSpec.describe 'タスク管理機能', type: :system do
     context '検索をした場合' do
       it "タイトルで検索できる" do
         visit tasks_path
-        fill_in 'Search Title', with: 'test_title_01'
-        click_on 'Search'
+        fill_in 'タイトル', with: 'test_title_01'
+        click_on '検索'
         expect(page).to have_content 'test_title_01'
       end
       it "ステータスで検索できる" do
         visit tasks_path
-        select '着手中', from: 'Search Status'
-        click_on 'Search'
+        select '着手中', from: '状態'
+        click_on '検索'
         expect(page).to have_content '着手中'
       end
       it 'タイトルとステータスの両方で検索できる' do
         visit tasks_path
-        fill_in 'Search Title', with: 'test_title_01'
-        select '着手中', from: 'Search Status'
-        click_on 'Search'
+        fill_in 'タイトル', with: 'test_title_01'
+        select '着手中', from: '状態'
+        click_on '検索'
         expect(page).to have_content 'test_title_01'
         expect(page).to have_content '着手中'
       end
