@@ -1,7 +1,15 @@
 FactoryBot.define do
   factory :task do
+    title { "test_title" }
+    description { "test_description" }
+    end_deadline { '2020-06-01' }
+    status { '着手中' }
+    priority { '低' }
+  end
+  factory :multiple_task, class: Task do
     sequence(:title) { |n| "test_title_#{n}"}
     sequence(:description) { |n| "test_description_#{n}"}
+    sequence(:created_at) { |n| Time.current + n.days }
     end_deadline { '2020-06-01' }
     status { '着手中' }
     priority { '低' }
@@ -36,6 +44,13 @@ FactoryBot.define do
   factory :high_priority, class: Task do
     title { "high_priority"}
     description { "high_priority" }
+    end_deadline { '2020-06-03' }
+    status { '未着手' }
+    priority { '高' }
+  end
+  factory :search_task, class: Task do
+    title { "search_title" }
+    description { "search_description" }
     end_deadline { '2020-06-03' }
     status { '未着手' }
     priority { '高' }

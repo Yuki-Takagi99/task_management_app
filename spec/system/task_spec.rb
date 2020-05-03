@@ -5,17 +5,17 @@ RSpec.describe 'タスク管理機能', type: :system do
       it '作成済みのタスクが表示される' do
         create(:task)
         visit tasks_path
-        expect(page).to have_content 'test_title_1'
+        expect(page).to have_content 'test_title'
       end
     end
     context '複数のタスクを作成した場合' do
       it 'タスクが作成日時の降順に並んでいる' do
-        create_list(:task, 3)
+        create_list(:multiple_task, 3)
         visit tasks_path
         task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
-        expect(task_list[0]).to have_content 'test_title_4'
-        expect(task_list[1]).to have_content 'test_title_3'
-        expect(task_list[2]).to have_content 'test_title_2'
+        expect(task_list[0]).to have_content 'test_title_3'
+        expect(task_list[1]).to have_content 'test_title_2'
+        expect(task_list[2]).to have_content 'test_title_1'
       end
     end
     context '終了期限でソートするボタンを押した場合' do
@@ -46,27 +46,27 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
     context '検索をした場合' do
       before do
-        create(:task)
+        create(:search_task)
       end
       it "タイトルで検索できる" do
         visit tasks_path
-        fill_in 'タイトル', with: 'test_title_6'
+        fill_in 'タイトル', with: 'search_title'
         click_on '検索'
-        expect(page).to have_content 'test_title_6'
+        expect(page).to have_content 'search_title'
       end
       it "ステータスで検索できる" do
         visit tasks_path
-        select '着手中', from: '状態'
+        select '未着手', from: '状態'
         click_on '検索'
-        expect(page).to have_content '着手中'
+        expect(page).to have_content '未着手'
       end
       it 'タイトルとステータスの両方で検索できる' do
         visit tasks_path
-        fill_in 'タイトル', with: 'test_title_8'
-        select '着手中', from: '状態'
+        fill_in 'タイトル', with: 'search_title'
+        select '未着手', from: '状態'
         click_on '検索'
-        expect(page).to have_content 'test_title_8'
-        expect(page).to have_content '着手中'
+        expect(page).to have_content 'search_title'
+        expect(page).to have_content '未着手'
       end
     end
   end
