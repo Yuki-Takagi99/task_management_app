@@ -1,9 +1,9 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
   before do
-    FactoryBot.create(:task)
-    FactoryBot.create(:second_task)
-    FactoryBot.create(:third_task)
+    create(:task)
+    create(:second_task)
+    create(:third_task)
   end
   describe 'タスク一覧画面' do
     context 'タスクを作成した場合' do
@@ -79,7 +79,7 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe 'タスク詳細画面' do
      context '任意のタスク詳細画面に遷移した場合' do
        it '該当タスクの内容が表示されたページに遷移する' do
-         task = FactoryBot.create(:task, title: 'test_title_04', description: 'test_description_04')
+         task = create(:task, title: 'test_title_04', description: 'test_description_04')
          visit tasks_path
          click_on 'test_title_04'
          expect(page).to have_content 'test_description_04'
