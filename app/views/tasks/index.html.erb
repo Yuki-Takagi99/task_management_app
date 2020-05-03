@@ -5,7 +5,7 @@
   <%= link_to t('.sort_by_priority'), tasks_path(sort_priority: "true"), class: 'btn btn-info' %></li>
 
 <h3><%= t('.search_tasks') %></h3>
-<%= form_with class:"form-inline", url:'/tasks', method: :get, local: true do |f| %>
+<%= form_with class:"form-inline", url:tasks_path, method: :get, local: true do |f| %>
   <div class="form-group">
     <%= f.label :title, t('activerecord.attributes.task.title') %>
     <%= f.text_field :title, class: 'form-control' %>
