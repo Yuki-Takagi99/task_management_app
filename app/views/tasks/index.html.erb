@@ -37,8 +37,8 @@
     <% @tasks.each do |task| %>
     <tr>
       <td class="task_row"><%= link_to task.title, task_path(task) %></td>
-      <td><%= task.created_at %></td>
-      <td class="deadline_row"><%= task.end_deadline %></td>
+      <td><%= task.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+      <td class="deadline_row"><%= task.end_deadline.strftime("%Y-%m-%d %H:%M") %></td>
       <td><%= task.status %></td>
       <td class="priority_row"><%= task.priority %></td>
       <td><%= link_to t('directory.edit'), edit_task_path(task), class: 'btn btn-primary mr-3' %></td>

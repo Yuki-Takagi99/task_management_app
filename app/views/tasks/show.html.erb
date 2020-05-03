@@ -18,7 +18,7 @@
     </tr>
     <tr>
       <th><%= t('activerecord.attributes.task.end_deadline') %></th>
-      <td><%= @task.end_deadline.strftime('%Y/%m/%d') %></td>
+      <td><%= @task.end_deadline.strftime("%Y-%m-%d %H:%M") %></td>
     </tr>
     <tr>
       <th><%= t('activerecord.attributes.task.status') %></th>
@@ -30,11 +30,11 @@
     </tr>
     <tr>
       <th><%= t('activerecord.attributes.task.created_at') %></th>
-      <td><%= @task.created_at %></td>
+      <td><%= @task.created_at.strftime("%Y-%m-%d %H:%M") %></td>
     </tr>
     <tr>
       <th><%= t('activerecord.attributes.task.updated_at') %></th>
-      <td><%= @task.updated_at %></td>
+      <td><%= @task.updated_at.strftime("%Y-%m-%d %H:%M") %></td>
     </tr>
   </tbody>
 </table>
