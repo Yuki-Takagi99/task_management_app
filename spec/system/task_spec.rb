@@ -15,7 +15,6 @@ RSpec.describe 'タスク管理機能', type: :system do
     context '複数のタスクを作成した場合' do
       it 'タスクが作成日時の降順に並んでいる' do
         visit tasks_path
-        sleep 0.5
         task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
         expect(task_list[0]).to have_content 'test_title_03'
         expect(task_list[1]).to have_content 'test_title_02'
@@ -26,7 +25,6 @@ RSpec.describe 'タスク管理機能', type: :system do
       it 'タスクが終了期限の昇順に並んでいる' do
         visit tasks_path
         click_on '終了期限でソートする'
-        sleep 0.5
         task_list = all('.deadline_row')
         expect(task_list[0]).to have_content '2020-06-01'
         expect(task_list[1]).to have_content '2020-06-02'
@@ -36,7 +34,6 @@ RSpec.describe 'タスク管理機能', type: :system do
       it '優先順位が高・中・低の順で並んでいる' do
         visit tasks_path
         click_on '優先順位でソートする'
-        sleep 0.5
         task_list = all('.priority_row')
         expect(task_list[0]).to have_content '高'
         expect(task_list[1]).to have_content '中'
