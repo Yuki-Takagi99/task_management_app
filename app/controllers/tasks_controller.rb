@@ -1,6 +1,20 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all.order(created_at: :desc) #作成日時順に表示
+    if params[:search].present?
+      if params[:title].present? && params[:status].present? #タイトルとステータス両方で検索する場合 #タイトルはあいまい検索
+        @tasks = Task.page(params[:page]).search_title(params[:title]).search_status(params[:status])
+      elsif params[:title].present? #タイトルのみで検索する場合
+        @tasks = Task.page(params[:page]).search_title(params[:title])
+      else params[:status].present? #ステータスのみで検索する場合
+        @tasks = Task.page(params[:page]).search_status(params[:status])
+      end
+    elsif params[:sort_expired]
+      @tasks = Task.page(params[:page]).order(end_deadline: :asc) #終了期限の昇順に表示
+    elsif params[:sort_priority]
+      @tasks = Task.page(params[:page]).order(priority: :asc).order(end_deadline: :asc) #優先順位が高いものを終了期限の昇順に表示
+    else
+      @tasks = Task.page(params[:page]).order(created_at: :desc) #作成日時の降順に表示
+    end
   end
 
   def show
@@ -38,6 +52,6 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:title, :description)
+    params.require(:task).permit(:title, :description, :end_deadline, :status, :priority)
   end
 end

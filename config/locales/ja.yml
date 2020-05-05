@@ -4,6 +4,11 @@ ja:
   tasks:
     index:
       task_list: タスク一覧
+      sort_by_end_deadline: 終了期限でソートする
+      sort_by_priority: 優先順位でソートする
+      search_tasks: タスクを検索する
+      search: 検索
+      clear: クリア
     new:
     show:
       task_details: タスク詳細

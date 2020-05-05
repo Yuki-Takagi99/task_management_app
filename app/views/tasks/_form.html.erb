@@ -10,7 +10,7 @@
     </div>
 <% end %>
 
-<%= form_with(model: task, local: true) do |f| %>
+<%= form_with(class: "form-inline", model: task, local: true) do |f| %>
   <div class="form-group">
     <%= f.label :title %>
     <%= f.text_field :title, class: 'form-control' %>
@@ -18,6 +18,18 @@
   <div class="form-group">
     <%= f.label :description %>
     <%= f.text_area :description, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :end_deadline %>
+    <%= f.date_field :end_deadline, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :status %>
+    <%= f.select :status, Task.statuses.keys, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :priority %>
+    <%= f.select :priority, Task.priorities.keys, class: 'form-control' %>
   </div>
   <%= f.submit t('helpers.submit.create'), class: 'btn btn-primary' %>
 <% end %>

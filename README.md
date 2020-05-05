@@ -11,12 +11,15 @@
 ### tasksテーブル
 #### モデル名:Task
 
-カラム名    | データ型 | limit  | null  | default
-------------|----------|--------|-------|--------
-title       | string   | 30文字 | false | なし
-description | text     | なし   | false | なし
-created_at  | datetime | なし   | false | なし
-updated_at  | datetime | なし   | false | なし
+カラム名     | データ型 | limit  | null  | default
+-------------|----------|--------|-------|--------
+title        | string   | 30文字 | false | なし
+description  | text     | なし   | false | なし
+end_deadline | datetime | なし   | false | now()
+status       | integer   | なし   | false | 未着手
+priority     | integer  | なし   | false | 高
+created_at   | datetime | なし   | false | なし
+updated_at   | datetime | なし   | false | なし
 
 ## herokuへのデプロイ手順
 
