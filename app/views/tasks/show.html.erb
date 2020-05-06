@@ -9,6 +9,10 @@
       <td><%= @task.id %></td>
     </tr>
     <tr>
+      <th><%= t('activerecord.models.user') %></th>
+      <td><%= @task.user.name %></td>
+    </tr>
+    <tr>
       <th><%= t('activerecord.attributes.task.title') %></th>
       <td><%= @task.title %></td>
     </tr>
