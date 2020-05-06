@@ -12,4 +12,8 @@ module SessionsHelper
       redirect_to new_session_path
     end
   end
+
+  def not_signup
+    redirect_to tasks_path unless current_user.blank?
+  end
 end

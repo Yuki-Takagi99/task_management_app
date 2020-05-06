@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :not_signup, only: [:new]
   before_action :must_login, only: [:show, :edit, :update, :destroy]
 
   def new
