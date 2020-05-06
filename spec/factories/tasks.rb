@@ -13,6 +13,7 @@ FactoryBot.define do
     end_deadline { '2020-06-01' }
     status { '着手中' }
     priority { '低' }
+    user_id { '1' }
   end
   factory :deadline_first, class: Task do
     title { "deadline_first" }
