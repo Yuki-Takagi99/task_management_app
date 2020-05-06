@@ -20,11 +20,18 @@ ja:
       create_my_account: アカウントを作成する
     show:
       my_page: のマイページ
+  sessions:
+    new:
+      login: ログイン
   # 共通で使う単語の日本語化
   directory:
     task_creation: タスクの新規作成
     edit: 編集
     delete: 削除
+    mypage: マイページ
+    signup: 新規登録
+    login: ログイン
+    logout: ログアウト
   # --- ここまで ---
   activerecord:
     errors:
