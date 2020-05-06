@@ -15,6 +15,7 @@ ja:
     edit:
       task_edit: タスクの編集
   users:
+    index:
     new:
       sign_up: 新規登録
       create_my_account: アカウントを作成する
@@ -25,13 +26,19 @@ ja:
       login: ログイン
   # 共通で使う単語の日本語化
   directory:
+    create: 作成
+    registration: 登録
     task_creation: タスクの新規作成
     edit: 編集
     delete: 削除
+    task_counts: 登録タスク数
     mypage: マイページ
     signup: 新規登録
     login: ログイン
     logout: ログアウト
+    create_user: ユーザー登録
+    user_list: ユーザー一覧
+    user_edit: ユーザー編集
   # --- ここまで ---
   activerecord:
     errors:

@@ -1,0 +1,32 @@
+<h2><%= t('directory.user_list') %></h2>
+
+<%= link_to t('directory.create_user'), new_admin_user_path, class: 'btn btn-info' %></li>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= t('activerecord.attributes.user.name') %></th>
+      <th><%= t('activerecord.attributes.user.email') %></th>
+      <th><%= t('activerecord.attributes.user.admin') %></th>
+      <th><%= t('activerecord.attributes.user.created_at') %></th>
+      <th><%= t('activerecord.attributes.user.updated_at') %></th>
+      <th><%= t('directory.task_counts') %></th>
+      <th><%= t('directory.edit') %></th>
+      <th><%= t('directory.delete') %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= user.email %></td>
+      <td><%= user.admin %></td>
+      <td><%= user.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+      <td><%= user.updated_at.strftime("%Y-%m-%d %H:%M") %></td>
+      <td><%= user.tasks.count %></td>
+      <td><%= link_to t('directory.edit'), edit_admin_user_path(user), class: 'btn btn-primary mr-3' %></td>
+      <td><%= link_to t('directory.delete'), admin_user_path(user), method: :delete, data: { confirm: "ユーザー「#{user.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger' %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
