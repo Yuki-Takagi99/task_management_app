@@ -18,7 +18,7 @@
   <tbody>
     <% @users.each do |user| %>
     <tr>
-      <td><%= user.name %></td>
+      <td><%= link_to user.name, admin_user_path(user) %></td>
       <td><%= user.email %></td>
       <td><%= user.admin %></td>
       <td><%= user.created_at.strftime("%Y-%m-%d %H:%M") %></td>

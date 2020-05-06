@@ -53,7 +53,7 @@ class Admin::UsersController < ApplicationController
     if current_user.admin?
       return true
     else
-      flash[:notice] = '権限がありません'
+      flash[:notice] = 'あなたは管理者ではありません。'
       redirect_to root_path
     end
   end
