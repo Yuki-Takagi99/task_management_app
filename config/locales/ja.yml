@@ -40,6 +40,7 @@ ja:
     user_list: ユーザー一覧
     user_edit: ユーザー編集
     user_control: ユーザー管理
+    user_details: ユーザー詳細
   # --- ここまで ---
   activerecord:
     errors:
