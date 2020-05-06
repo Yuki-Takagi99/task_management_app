@@ -18,6 +18,7 @@
       <nav class="navbar">
         <ul class="nav navbar-nav navbar-right">
           <% if logged_in? %>
+            <li class="navbar-item"><%= link_to t('directory.user_control'), admin_users_path %></li>
             <li class="navbar-item"><%= link_to t('directory.mypage'), user_path(current_user.id) %></li>
             <li class="navbar-item"><%= link_to t('directory.logout'), session_path(current_user.id), method: :delete %></li>
           <% else %>
