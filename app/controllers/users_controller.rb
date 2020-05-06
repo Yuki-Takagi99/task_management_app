@@ -14,7 +14,11 @@ class UsersController < ApplicationController
     end
   end
   def show
-    @user = User.find(params[:id])
+    if current_user.id == User.find(params[:id])[:id] # 他ユーザーのマイページにアクセスした場合、タスク一覧に遷移
+      @user = User.find(params[:id])
+    else
+      redirect_to tasks_path
+    end
   end
 
   private
