@@ -14,6 +14,12 @@ ja:
       task_details: タスク詳細
     edit:
       task_edit: タスクの編集
+  users:
+    new:
+      sign_up: 新規登録
+      create_my_account: アカウントを作成する
+    show:
+      my_page: のマイページ
   # 共通で使う単語の日本語化
   directory:
     task_creation: タスクの新規作成
