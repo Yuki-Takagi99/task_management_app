@@ -50,7 +50,11 @@ class TasksController < ApplicationController
   def destroy
     task = Task.find(params[:id])
     task.destroy
-    redirect_to tasks_url, notice: "タスク「#{task.title}」を削除しました。"
+    if current_user.admin?
+      redirect_to admin_users_path, notice: "タスク「#{task.title}」を削除しました。"
+    else
+      redirect_to tasks_url, notice: "タスク「#{task.title}」を削除しました。"
+    end
   end
 
   private
