@@ -21,6 +21,21 @@ priority     | integer  | なし   | false | 高
 created_at   | datetime | なし   | false | なし
 updated_at   | datetime | なし   | false | なし
 
+### usersテーブル
+#### モデル名:User
+
+カラム名        | データ型 | limit     | null  | default
+----------------|----------|-----------|-------|--------
+name            | string   | 30文字    | false | なし
+email           | string   | 255文字   | false | なし
+password_digest | string   | 6文字以上 | false | なし
+admin           | boolean  | なし      | false | false
+created_at      | datetime | なし      | false | なし
+updated_at      | datetime | なし      | false | なし
+
+
+
+
 ## herokuへのデプロイ手順
 
 1. アセットプリコンパイルを実施
@@ -39,7 +54,7 @@ $ heroku create
 4. herokuにデプロイ
 ```
 $ git push heroku master
-```  
+```
 5. データベースのmigrateを実施
 ```
 $ heroku run rails db:migrate

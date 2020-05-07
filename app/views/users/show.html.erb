@@ -1,0 +1,31 @@
+<h2><%= @user.name %><%= t('.my_page') %></h2>
+
+<%= link_to t('tasks.index.task_list'), tasks_path, class: 'btn btn-info' %>
+
+<h3><%= t('directory.user_details') %></h3>
+<table class="table table-striped">
+  <tbody>
+    <tr>
+      <th><%= t('activerecord.attributes.user.name') %></th>
+      <td><%= @user.name %></td>
+    </tr>
+    <tr>
+      <th><%= t('activerecord.attributes.user.email') %></th>
+      <td><%= @user.email %></td>
+    </tr>
+    <% #一般ユーザーにはあえて見せない %>
+    <!-- <tr>
+      <th><%= t('activerecord.attributes.user.admin') %></th>
+      <td><%= @user.admin %></td>
+    </tr>
+    <tr> -->
+      <th><%= t('activerecord.attributes.user.created_at') %></th>
+      <td><%= @user.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+    </tr>
+    <% #一般ユーザーにはあえて見せない %>
+    <!-- <tr>
+      <th><%= t('activerecord.attributes.user.updated_at') %></th>
+      <td><%= @user.updated_at.strftime("%Y-%m-%d %H:%M") %></td>
+    </tr> -->
+  </tbody>
+</table>

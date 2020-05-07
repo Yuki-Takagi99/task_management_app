@@ -1,0 +1,13 @@
+<h2><%= t('.login') %></h2>
+
+<%= form_with(scope: :session, url: sessions_path, local: true) do |f| %>
+  <div class="form-group">
+    <%= f.label :email, t('activerecord.attributes.user.email') %>
+    <%= f.email_field :email, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :password, t('activerecord.attributes.user.password') %>
+    <%= f.password_field :password, class: 'form-control' %>
+  </div>
+  <%= f.submit t('.login'), class: 'btn btn-primary'  %>
+<% end %>
