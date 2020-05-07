@@ -25,7 +25,7 @@ class Admin::UsersController < ApplicationController
   def edit
   end
 
-  def update
+  def update    
     if @user.update(user_params)
       redirect_to admin_users_path(@user), notice: "ユーザー「#{@user.name}」を更新しました。"
     else
