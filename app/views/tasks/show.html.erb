@@ -33,6 +33,14 @@
       <td><%= @task.priority %></td>
     </tr>
     <tr>
+      <th><%= t('activerecord.models.label') %></th>
+      <td>
+        <% @task.labels.each do |label| %>
+          <%= label.name %>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
       <th><%= t('activerecord.attributes.task.created_at') %></th>
       <td><%= @task.created_at.strftime("%Y-%m-%d %H:%M") %></td>
     </tr>

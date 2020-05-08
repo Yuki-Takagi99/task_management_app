@@ -59,6 +59,6 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:title, :description, :end_deadline, :status, :priority)
+    params.require(:task).permit(:title, :description, :end_deadline, :status, :priority, { label_ids: [] })
   end
 end
