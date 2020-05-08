@@ -16,7 +16,7 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :label, t('activerecord.models.label') %>
+    <%= f.label :label, t('activerecord.attributes.label.name') %>
     <%= f.select("label_id", Label.pluck(:name, :id), { include_blank: true }) %>
   </div>
 
