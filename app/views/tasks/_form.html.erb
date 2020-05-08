@@ -32,7 +32,7 @@
     <%= f.select :priority, Task.priorities.keys, class: 'form-control' %>
   </div>
   <div class="form-group">
-      <%= f.collection_check_boxes(:label_ids, Label.all, :id, :name) %>
+      <%= f.collection_check_boxes(:label_ids, Label.all, :id, :name, include_hidden: false) %>
   </div>
   <%= f.submit t('helpers.submit.create'), class: 'btn btn-primary' %>
 <% end %>
