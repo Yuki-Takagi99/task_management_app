@@ -3,12 +3,20 @@ class TasksController < ApplicationController
 
   def index
     if params[:search].present?
-      if params[:title].present? && params[:status].present? #タイトルとステータス両方で検索する場合 #タイトルはあいまい検索
+      if params[:title].present? && params[:status].present? && params[:label_id].present? #タイトルとステータスとラベルで検索する場合
+        @tasks = Task.page(params[:page]).where(user_id: current_user.id).search_title(params[:title]).search_status(params[:status]).seach_label(labels: { id: params[:label_id] })
+      elsif params[:title].present? && params[:status].present? #タイトルとステータスで検索する場合
         @tasks = Task.page(params[:page]).where(user_id: current_user.id).search_title(params[:title]).search_status(params[:status])
+      elsif params[:title].present? && params[:label_id].present? #タイトルとラベルで検索する場合
+        @tasks = Task.page(params[:page]).where(user_id: current_user.id).search_title(params[:title]).seach_label(labels: { id: params[:label_id] })
+      elsif params[:status].present? && params[:label_id].present? #ステータスとラベルで検索する場合
+        @tasks = Task.page(params[:page]).where(user_id: current_user.id).search_status(params[:status]).seach_label(labels: { id: params[:label_id] })
       elsif params[:title].present? #タイトルのみで検索する場合
         @tasks = Task.page(params[:page]).where(user_id: current_user.id).search_title(params[:title])
-      else params[:status].present? #ステータスのみで検索する場合
+      elsif params[:status].present? #ステータスのみで検索する場合
         @tasks = Task.page(params[:page]).where(user_id: current_user.id).search_status(params[:status])
+      else params[:label_id].present? #ラベルのみで検索する場合
+        @tasks = Task.page(params[:page]).where(user_id: current_user.id).seach_label(labels: { id: params[:label_id] })
       end
     elsif params[:sort_expired]
       @tasks = Task.page(params[:page]).where(user_id: current_user.id).order(end_deadline: :asc) #終了期限の昇順に表示

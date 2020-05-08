@@ -14,6 +14,12 @@
     <%= f.label :status, t('activerecord.attributes.task.status') %>
     <%= f.select :status, Task.statuses.keys, { include_blank: true, selected: '' }, class: 'form-control' %>
   </div>
+
+  <div class="form-group">
+    <%= f.label :label, t('activerecord.models.label') %>
+    <%= f.select("label_id", Label.pluck(:name, :id), { include_blank: true }) %>
+  </div>
+
   <%= f.hidden_field :search, value: 'true' %>
   <%= f.submit t('.search'), class: 'btn btn-primary'%><%= link_to t('.clear'), tasks_path, class: 'btn btn-danger' %>
 <% end %>
