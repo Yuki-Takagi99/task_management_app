@@ -1,38 +1,42 @@
-
-<% if task.errors.present? %>
+<div class="col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+  <% if task.errors.present? %>
     <div id="error_explanation">
       <h2><%= task.errors.count %>件のエラーがあります。</h2>
-      <ul>
-      <% task.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+        <ul>
+          <% task.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
     </div>
-<% end %>
+  <% end %>
+</div>
 
-<%= form_with(class: "form-inline", model: task, local: true) do |f| %>
-  <div class="form-group">
+<%= form_with(model: task, local: true) do |f| %>
+  <div class="form-group col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
     <%= f.label :title %>
     <%= f.text_field :title, class: 'form-control' %>
   </div>
-  <div class="form-group">
+  <div class="form-group col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
     <%= f.label :description %>
     <%= f.text_area :description, class: 'form-control' %>
   </div>
-  <div class="form-group">
+  <div class="form-group col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
     <%= f.label :end_deadline %>
     <%= f.date_field :end_deadline, class: 'form-control' %>
   </div>
-  <div class="form-group">
+  <div class="form-group col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
     <%= f.label :status %>
     <%= f.select :status, Task.statuses.keys, class: 'form-control' %>
   </div>
-  <div class="form-group">
+  <div class="form-group col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
     <%= f.label :priority %>
     <%= f.select :priority, Task.priorities.keys, class: 'form-control' %>
   </div>
-  <div class="form-group">
+  <div class="form-group col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+      <%= f.label :label, "ラベル" %>
       <%= f.collection_check_boxes(:label_ids, Label.all, :id, :name, include_hidden: false) %>
   </div>
-  <%= f.submit t('helpers.submit.create'), class: 'btn btn-primary' %>
+  <div class="form-group col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+      <%= f.submit t('helpers.submit.create'), class: 'btn btn-primary' %>
+  </div>
 <% end %>

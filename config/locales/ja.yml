@@ -24,6 +24,7 @@ ja:
   sessions:
     new:
       login: ログイン
+  labels:
   # 共通で使う単語の日本語化
   directory:
     create: 作成
