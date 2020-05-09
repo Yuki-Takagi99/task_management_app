@@ -4,16 +4,15 @@
     <title>TaskManagementApp</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <meta name="viewport" content="width=device-width">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <div class="container-fluid">
-    <div class="page-header">
-      <h1>TaskManagement App <small>  タスクを管理できるアプリ</small></h1>
-    </div>
+    <header>
+      <h1>TaskManagement App <small>  タスク管理アプリ</small></h1>
+    </header>
 
     <div id="wrapper">
       <nav class="navbar">
@@ -29,12 +28,12 @@
         </ul>
       </nav>
     </div>
-
-    <% if flash.notice.present? %>
-      <%= flash.notice %>
+    
+    <% flash.each do |key, value| %>
+      <p class="alert alert-<%= key %>">
+        <%= value %>
+      </p>
     <% end %>
-
     <%= yield %>
   </body>
-  </div>
 </html>
