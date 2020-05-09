@@ -29,7 +29,7 @@ User.all.each do |user|
 end
 
 # ラベルの作成
-3.times do |n|
+5.times do |n|
   Label.create!(
     name: "label#{n + 1}"
   )
