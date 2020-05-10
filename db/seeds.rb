@@ -1,4 +1,5 @@
 
+# 管理者ユーザーの作成
 User.create!(
   name: 'admin',
   email: 'admin@test.com',
@@ -7,6 +8,7 @@ User.create!(
   admin: 'true',
 )
 
+# 一般ユーザーの作成
 3.times do |n|
   User.create!(
     name: "user#{n + 1}",
@@ -17,10 +19,18 @@ User.create!(
   )
 end
 
+# ユーザーに紐づくタスクの作成
 User.all.each do |user|
   user.tasks.create!(
     title: "sample1",
     description: "sample1",
     user_id: user.id
+  )
+end
+
+# ラベルの作成
+5.times do |n|
+  Label.create!(
+    name: "label#{n + 1}"
   )
 end

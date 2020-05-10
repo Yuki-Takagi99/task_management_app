@@ -1,6 +1,7 @@
 # このアプリについて
 
 このアプリはタスクを管理するアプリです。
+タスクには優先順位、ステータス、ラベルを付加し、登録することが可能です。
 
 ## バージョン
   - Ruby 2.6.5
@@ -33,8 +34,24 @@ admin           | boolean  | なし      | false | false
 created_at      | datetime | なし      | false | なし
 updated_at      | datetime | なし      | false | なし
 
+### labelsテーブル
+#### モデル名:Label
 
+カラム名        | データ型 | limit     | null  | default
+----------------|----------|-----------|-------|--------
+name            | string   | なし    | false | なし
+created_at      | datetime | なし      | false | なし
+updated_at      | datetime | なし      | false | なし
 
+### labellingsテーブル
+#### モデル名:Labelling
+
+カラム名   | データ型 | limit | null  | default
+-----------|----------|-------|-------|--------
+task_id    | bigint   | なし  | なし  | なし
+label_id   | bigint   | なし  | なし  | なし
+created_at | datetime | なし  | false | なし
+updated_at | datetime | なし  | false | なし
 
 ## herokuへのデプロイ手順
 

@@ -3,12 +3,20 @@ class TasksController < ApplicationController
 
   def index
     if params[:search].present?
-      if params[:title].present? && params[:status].present? #タイトルとステータス両方で検索する場合 #タイトルはあいまい検索
+      if params[:title].present? && params[:status].present? && params[:label_id].present? #タイトルとステータスとラベルで検索する場合
+        @tasks = Task.page(params[:page]).where(user_id: current_user.id).search_title(params[:title]).search_status(params[:status]).seach_label(labels: { id: params[:label_id] })
+      elsif params[:title].present? && params[:status].present? #タイトルとステータスで検索する場合
         @tasks = Task.page(params[:page]).where(user_id: current_user.id).search_title(params[:title]).search_status(params[:status])
+      elsif params[:title].present? && params[:label_id].present? #タイトルとラベルで検索する場合
+        @tasks = Task.page(params[:page]).where(user_id: current_user.id).search_title(params[:title]).seach_label(labels: { id: params[:label_id] })
+      elsif params[:status].present? && params[:label_id].present? #ステータスとラベルで検索する場合
+        @tasks = Task.page(params[:page]).where(user_id: current_user.id).search_status(params[:status]).seach_label(labels: { id: params[:label_id] })
       elsif params[:title].present? #タイトルのみで検索する場合
         @tasks = Task.page(params[:page]).where(user_id: current_user.id).search_title(params[:title])
-      else params[:status].present? #ステータスのみで検索する場合
+      elsif params[:status].present? #ステータスのみで検索する場合
         @tasks = Task.page(params[:page]).where(user_id: current_user.id).search_status(params[:status])
+      else params[:label_id].present? #ラベルのみで検索する場合
+        @tasks = Task.page(params[:page]).where(user_id: current_user.id).seach_label(labels: { id: params[:label_id] })
       end
     elsif params[:sort_expired]
       @tasks = Task.page(params[:page]).where(user_id: current_user.id).order(end_deadline: :asc) #終了期限の昇順に表示
@@ -31,7 +39,8 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
     @task.user_id = current_user.id
     if @task.save
-      redirect_to @task, notice: "タスク「#{@task.title}」を登録しました。"
+      flash[:success] = "タスク「#{@task.title}」を登録しました。"
+      redirect_to @task
     else
       render :new
     end
@@ -44,21 +53,24 @@ class TasksController < ApplicationController
   def update
     task = Task.find(params[:id])
     task.update!(task_params)
-    redirect_to tasks_url, notice: "タスク「#{task.title}」を更新しました。"
+    flash[:success] = "タスク「#{task.title}」を更新しました。"
+    redirect_to tasks_url
   end
 
   def destroy
     task = Task.find(params[:id])
     task.destroy
     if current_user.admin?
-      redirect_to admin_users_path, notice: "タスク「#{task.title}」を削除しました。"
+      flash[:success] = "タスク「#{task.title}」を削除しました。"
+      redirect_to admin_users_path
     else
-      redirect_to tasks_url, notice: "タスク「#{task.title}」を削除しました。"
+      flash[:success] = "タスク「#{task.title}」を削除しました。"
+      redirect_to tasks_url
     end
   end
 
   private
   def task_params
-    params.require(:task).permit(:title, :description, :end_deadline, :status, :priority)
+    params.require(:task).permit(:title, :description, :end_deadline, :status, :priority, { label_ids: [] })
   end
 end

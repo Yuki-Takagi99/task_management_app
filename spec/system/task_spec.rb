@@ -4,32 +4,42 @@ RSpec.describe 'タスク管理機能', type: :system do
   before do
     @user = create(:user)
     @admin_user = create(:admin_user)
+
+    @task = create(:task, user: @user)
+    @second_task = create(:second_task, user: @user)
+    @third_task = create(:third_task, user: @user)
+
+    @label = create(:label)
+    @second_label = create(:second_label)
+    @third_label = create(:third_label)
+
+    create(:labelling, task: @task, label: @label)
+    create(:labelling, task: @second_task, label: @second_label)
+    create(:labelling, task: @third_task, label: @third_label)
   end
 
   describe 'タスク一覧画面' do
     context 'タスクを作成した場合' do
-      it '作成済みのタスクが表示される' do
-        create(:task, user: @user)
+      it '作成済みのタスクが表示されること' do
         login
         visit tasks_path
         expect(page).to have_content 'test_title'
+        expect(page).to have_content 'second_test_title'
+        expect(page).to have_content 'third_test_title'
       end
     end
     context '複数のタスクを作成した場合' do
-      it 'タスクが作成日時の降順に並んでいる' do
-        create_list(:multiple_task, 3)
+      it 'タスクが作成日時の降順に並んでいること' do
         login
         visit tasks_path
         task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
-        expect(task_list[0]).to have_content 'test_title_3'
-        expect(task_list[1]).to have_content 'test_title_2'
-        expect(task_list[2]).to have_content 'test_title_1'
+        expect(task_list[0]).to have_content 'third_test_title'
+        expect(task_list[1]).to have_content 'second_test_title'
+        expect(task_list[2]).to have_content 'test_title'
       end
     end
     context '終了期限でソートするボタンを押した場合' do
-      it 'タスクが終了期限の昇順に並んでいる' do
-        create(:task, user: @user)
-        create(:deadline_first, user: @user)
+      it 'タスクが終了期限の昇順に並んでいること' do
         login
         visit tasks_path
         click_on '終了期限でソートする'
@@ -37,13 +47,11 @@ RSpec.describe 'タスク管理機能', type: :system do
         task_list = all('.deadline_row')
         expect(task_list[0]).to have_content '2020-06-01'
         expect(task_list[1]).to have_content '2020-06-02'
+        expect(task_list[2]).to have_content '2020-06-03'
       end
     end
     context '優先順位でソートするボタンを押した場合' do
-      it '優先順位が高・中・低の順で並んでいる' do
-        create(:low_priority, user: @user)
-        create(:middle_priority, user: @user)
-        create(:high_priority, user: @user)
+      it '優先順位が高・中・低の順で並んでいること' do
         login
         visit tasks_path
         click_on '優先順位でソートする'
@@ -55,41 +63,75 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
     end
     context '検索をした場合' do
-      before do
-        create(:search_task, user: @user)
-      end
-      it "タイトルで検索できる" do
+      it "タイトルのみで検索できること" do
         login
         visit tasks_path
-        fill_in 'タイトル', with: 'search_title'
+        fill_in 'タイトル', with: 'test_title'
         click_on '検索'
-        expect(page).to have_content 'search_title'
+        expect(page).to have_content 'test_title'
       end
-      it "ステータスで検索できる" do
+      it "ステータスのみで検索できること" do
+        login
+        visit tasks_path
+        select '着手中', from: '状態'
+        click_on '検索'
+        expect(page).to have_content '着手中'
+      end
+      it "ラベルのみで検索できること" do
+        login
+        visit tasks_path
+        select 'label1', from: 'label_id'
+        click_on '検索'
+        expect(page).to have_content 'label1'
+      end
+      it 'タイトルとステータスで検索できること' do
+        login
+        visit tasks_path
+        fill_in 'タイトル', with: 'test_title'
+        select '着手中', from: '状態'
+        click_on '検索'
+        expect(page).to have_content 'test_title'
+        expect(page).to have_content '着手中'
+      end
+      it 'タイトルとラベルで検索できること' do
+        login
+        visit tasks_path
+        fill_in 'タイトル', with: 'test_title'
+        select 'label1', from: 'label_id'
+        click_on '検索'
+        expect(page).to have_content 'test_title'
+        expect(page).to have_content 'label1'
+      end
+      it 'ステータスとラベルで検索できること' do
         login
         visit tasks_path
         select '未着手', from: '状態'
+        select 'label1', from: 'label_id'
         click_on '検索'
         expect(page).to have_content '未着手'
+        expect(page).to have_content 'label1'
       end
-      it 'タイトルとステータスの両方で検索できる' do
+      it 'タイトルとステータスとラベルで検索できること' do
         login
         visit tasks_path
-        fill_in 'タイトル', with: 'search_title'
+        fill_in 'タイトル', with: 'test_title'
         select '未着手', from: '状態'
+        select 'label1', from: 'label_id'
         click_on '検索'
-        expect(page).to have_content 'search_title'
+        expect(page).to have_content 'test_title'
         expect(page).to have_content '未着手'
+        expect(page).to have_content 'label1'
       end
     end
   end
   describe 'タスク登録画面' do
     context '必要項目を入力して、createボタンを押した場合' do
-      it 'データが保存される' do
+      it 'データが保存されること' do
         login
         visit new_task_path
         fill_in 'タイトル', with: 'create_test_title'
         fill_in '詳細', with: 'create_test_description'
+        check 'label1'
         click_on '登録する'
         expect(page).to have_content 'create_test_title'
       end
@@ -97,12 +139,13 @@ RSpec.describe 'タスク管理機能', type: :system do
   end
   describe 'タスク詳細画面' do
      context '任意のタスク詳細画面に遷移した場合' do
-       it '該当タスクの内容が表示されたページに遷移する' do
+       it '該当タスクの内容が表示されたページに遷移すること' do
          login
-         create(:task, user: @user, title: 'show_test_title', description: 'show_test_description')
          visit tasks_path
-         click_on 'show_test_title'
-         expect(page).to have_content 'show_test_description'
+         click_on 'test_title'
+         expect(page).to have_content 'test_title'
+         expect(page).to have_content 'test_description'
+         expect(page).to have_content 'label1'
        end
      end
   end

@@ -1,51 +1,67 @@
-<h2><%= t('.task_list') %></h2>
-
-  <%= link_to t('directory.task_creation'), new_task_path, class: 'btn btn-info' %></li>
-  <%= link_to t('.sort_by_end_deadline'), tasks_path(sort_expired: "true"), class: 'btn btn-info' %></li>
-  <%= link_to t('.sort_by_priority'), tasks_path(sort_priority: "true"), class: 'btn btn-info' %></li>
-
-<h3><%= t('.search_tasks') %></h3>
-<%= form_with class:"form-inline", url:tasks_path, method: :get, local: true do |f| %>
-  <div class="form-group">
-    <%= f.label :title, t('activerecord.attributes.task.title') %>
-    <%= f.text_field :title, class: 'form-control' %>
-  </div>
-  <div class="form-group">
-    <%= f.label :status, t('activerecord.attributes.task.status') %>
-    <%= f.select :status, Task.statuses.keys, { include_blank: true, selected: '' }, class: 'form-control' %>
-  </div>
-  <%= f.hidden_field :search, value: 'true' %>
-  <%= f.submit t('.search'), class: 'btn btn-primary'%><%= link_to t('.clear'), tasks_path, class: 'btn btn-danger' %>
-<% end %>
-
-<%= paginate @tasks %>
-<%= page_entries_info @tasks %>
-
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th><%= t('activerecord.attributes.task.title') %></th>
-      <th><%= t('activerecord.models.user') %></th>
-      <th><%= t('activerecord.attributes.task.created_at') %></th>
-      <th><%= t('activerecord.attributes.task.end_deadline') %></th>
-      <th><%= t('activerecord.attributes.task.status') %></th>
-      <th><%= t('activerecord.attributes.task.priority') %></th>
-      <th><%= t('directory.edit') %></th>
-      <th><%= t('directory.delete') %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @tasks.each do |task| %>
-    <tr>
-      <td class="task_row"><%= link_to task.title, task_path(task) %></td>
-      <td><%= task.user.name %></td>
-      <td><%= task.created_at.strftime("%Y-%m-%d %H:%M") %></td>
-      <td class="deadline_row"><%= task.end_deadline.strftime("%Y-%m-%d %H:%M") %></td>
-      <td><%= task.status %></td>
-      <td class="priority_row"><%= task.priority %></td>
-      <td><%= link_to t('directory.edit'), edit_task_path(task), class: 'btn btn-primary mr-3' %></td>
-      <td><%= link_to t('directory.delete'), task, method: :delete, data: { confirm: "タスク「#{task.title}」を削除します。よろしいですか？" }, class: 'btn btn-danger' %></td>
-    </tr>
+<div class="container-fluid">
+  <div class="row">
+    <h2><%= t('.task_list') %></h2>
+    <h3><%= t('.search_tasks') %></h3>
+    <%= form_with class:"form-inline", url:tasks_path, method: :get, local: true do |f| %>
+      <div class="form-group">
+        <%= f.label :title, t('activerecord.attributes.task.title') %>
+        <%= f.text_field :title, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :status, t('activerecord.attributes.task.status') %>
+        <%= f.select :status, Task.statuses.keys, { include_blank: true, selected: '' }, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :label, t('activerecord.attributes.label.name') %>
+        <%= f.select("label_id", Label.pluck(:name, :id), { include_blank: true }) %>
+      </div>
+      <div class="form-group">
+        <%= f.hidden_field :search, value: 'true' %>
+        <%= f.submit t('.search'), class: 'btn btn-primary'%><%= link_to t('.clear'), tasks_path, class: 'btn btn-danger' %>
+      </div>
     <% end %>
-  </tbody>
-</table>
+
+    <br>
+    <%= link_to t('directory.task_creation'), new_task_path, class: 'btn btn-info' %></li>
+    <%= link_to t('.sort_by_end_deadline'), tasks_path(sort_expired: "true"), class: 'btn btn-info' %></li>
+    <%= link_to t('.sort_by_priority'), tasks_path(sort_priority: "true"), class: 'btn btn-info' %></li>
+    <br>
+
+    <%= paginate @tasks %>
+    <%= page_entries_info @tasks %>
+
+    <table class="table table-hover table-striped table-sm">
+      <thead>
+        <tr>
+          <th><%= t('activerecord.attributes.task.title') %></th>
+          <th><%= t('activerecord.models.user') %></th>
+          <th><%= t('activerecord.attributes.task.created_at') %></th>
+          <th><%= t('activerecord.attributes.task.end_deadline') %></th>
+          <th><%= t('activerecord.attributes.task.status') %></th>
+          <th><%= t('activerecord.attributes.task.priority') %></th>
+          <th><%= t('activerecord.models.label') %></th>
+          <th><%= t('directory.edit') %></th>
+          <th><%= t('directory.delete') %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @tasks.each do |task| %>
+          <tr>
+            <td class="task_row"><%= link_to task.title, task_path(task) %></td>
+            <td><%= task.user.name %></td>
+            <td><%= task.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+            <td class="deadline_row"><%= task.end_deadline.strftime("%Y-%m-%d %H:%M") %></td>
+            <td><%= task.status %></td>
+            <td class="priority_row"><%= task.priority %></td>
+            <td>
+              <% task.labels.each do |label| %>
+                <%= label.name %>
+              <% end %></td>
+            <td><%= link_to t('directory.edit'), edit_task_path(task), class: 'btn btn-primary mr-3' %></td>
+            <td><%= link_to t('directory.delete'), task, method: :delete, data: { confirm: "タスク「#{task.title}」を削除します。よろしいですか？" }, class: 'btn btn-danger' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
