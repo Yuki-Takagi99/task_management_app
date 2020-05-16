@@ -15,7 +15,7 @@ set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets public/uploads}
 # 保持するバージョンの個数(※後述)
 set :keep_releases, 5
 # Rubyのバージョン
-set :rbenv_ruby, '2.5.1'
+set :rbenv_ruby, '2.6.5'
 set :rbenv_type, :system
 # 出力するログのレベル。エラーログを詳細に見たい場合は :debug に設定する。
 # 本番環境用のものであれば、 :info程度が普通。
